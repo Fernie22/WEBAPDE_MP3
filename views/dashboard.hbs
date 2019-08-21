@@ -1,0 +1,218 @@
+<html lang="en">
+    <head>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <!-- Primary Meta Tags -->
+        <title>Meta Tags — Preview, Edit and Generate</title>
+        <meta name="title" content="Meta Tags — Preview, Edit and Generate">
+        <meta name="description" content="With Meta Tags you can edit and experiment with your content then preview how your webpage will look on Google, Facebook, Twitter and more!">
+
+        <!-- Open Graph / Facebook -->
+        <meta property="og:type" content="website">
+        <meta property="og:url" content="https://metatags.io/">
+        <meta property="og:title" content="Meta Tags — Preview, Edit and Generate">
+        <meta property="og:description" content="With Meta Tags you can edit and experiment with your content then preview how your webpage will look on Google, Facebook, Twitter and more!">
+        <meta property="og:image" content="https://metatags.io/assets/meta-tags-16a33a6a8531e519cc0936fbba0ad904e52d35f34a46c97a2c9f6f7dd7d336f2.png">
+
+        <!-- Twitter -->
+        <meta property="twitter:card" content="summary_large_image">
+        <meta property="twitter:url" content="https://metatags.io/">
+        <meta property="twitter:title" content="Meta Tags — Preview, Edit and Generate">
+        <meta property="twitter:description" content="With Meta Tags you can edit and experiment with your content then preview how your webpage will look on Google, Facebook, Twitter and more!">
+        <meta property="twitter:image" content="https://metatags.io/assets/meta-tags-16a33a6a8531e519cc0936fbba0ad904e52d35f34a46c97a2c9f6f7dd7d336f2.png">
+        <script src="jquery.js"></script>
+        <script>
+            $(document).ready(function(){
+                $("button.editbookmark").click(function(){
+                    let bookmarkid = $(this).attr("data-id")
+                    $("#editid").val(bookmarkid)
+                    $("#editform").submit()
+                })
+                
+                $("button.deletebookmark").click(function(){
+                    let userid = $(this).attr("data-id")
+                    let check = confirm("Are you sure you want to delete?")
+                    $.ajax({
+                        url: "delete",
+                        method: "post",
+                        data: {
+                            id: userid
+                        }, 
+                        success: function(result){
+                            if(result.ok == 1 && check == true){
+                                alert("Successful delete!")
+                                $("div[data-id='"+userid+"']").remove()
+                            }
+                            else if(check == false){
+                                alert("Delete cancelled!")
+                            }
+                            else{
+                                alert("Something's wrong!")
+                            }
+                        }
+                    })
+                })
+            })
+            
+        </script>
+        <style>
+        body{
+            margin:0;
+            padding:0;
+            font-family: 'Poppins', sans-serif;
+            background:#333;
+        }
+        .container{
+            width:1200px;
+            margin:20px auto;
+            columns:4;
+            column-gap:40px;
+        }
+        .container .box{
+            width:100%;
+            margin:0 0 20px;
+            padding: 10px;
+            background: #fff;
+            overflow:hidden;
+            break-inside:avoid;
+        }
+
+        .container .box img{
+            max-width:100%;
+        }
+        .container .box h2{
+            margin:10px 0 0;
+            padding:0;
+            font-size:20px;
+        }
+
+        .container .box p{
+            margin:0;
+            padding:0 0 10px;
+            font-size:16px
+        }
+        @media(max-width: 1200px){
+            .container{
+                columns:3;
+                width:calc(100%-40px);
+                box-sizing:border-box;
+                padding:20px 20px 20px 0;
+            }
+        }
+        @media(max-width: 768px){
+            .container{
+                columns:2;
+            }
+        }
+        @media(max-width: 480px){
+            .container{
+                columns:1;
+            }
+        }
+
+        iframe{
+            margin:0 10px 0;
+        }
+
+        button{
+            margin:0 250px 0;
+            font-family: "Roboto", sans-serif;
+            text-transform: uppercase;
+            background:dodgerblue;
+            border: 0%;
+            padding: 10px;
+            color: black;
+            font-size: 14px;
+            cursor: pointer;
+        }
+        .container .box button{
+            margin:0 10px 0;
+            background:orange;
+        }
+        .container .box .deletebookmark{
+            margin:0 10px 0;
+            background:red;
+        }
+        button:hover {
+            background-color: RoyalBlue;
+        }
+        .container .box button:hover {
+            background-color: orangered;
+        }
+        .container .box .deletebookmark:hover {
+            background-color: darkred;
+        }
+
+        form{
+            margin:0 200px 0; 
+        }
+
+        ul {
+          list-style-type: none;
+          margin: 0;
+          padding: 0;
+          overflow: hidden;
+          background-color: black;
+        }
+        
+        li {
+          float: left;
+        }
+        
+        li a {
+          display: block;
+          color: white;
+          text-align: center;
+          padding: 14px 16px;
+          text-decoration: none;
+        }
+        
+        li a:hover:not(.active) {
+          background-color: #111;
+        }
+        
+        .active {
+          background-color: #4CAF50;
+        }
+        h2{
+            color:white;    
+        }
+    </style>
+    </head>
+    
+    <body>
+        <form id="editform" action="editbookmark">
+            <input type="hidden" name="id" id="editid">
+        </form>
+
+        <ul>
+            <li><a class="active" href="#home">Dashboard</a></li>
+            <li><a href="home">Profile</a></li>
+            <li style="float:right"><a href="/login.html">Logout</a></li>
+        </ul>
+        <h2>Welcome {{username}}! </h2><br>
+
+            <a href="addbookmarkpage"><button><i class="fa fa-plus"></i> Add Bookmark</button></a>
+            <div class="container" >
+                {{#each bookmarks}}
+                <div class="box" data-id="{{_id}}">
+                    <a href="{{link}}" target="_blank"><div>
+                        <img src="{{metaimage}}">
+                        <h1>{{title}}</h1>
+                    </div></a>
+                    <h4>Link by: {{ownername}}</h4>
+                    <p>{{comment}}</p>
+                    <button class="editbookmark" data-id="{{_id}}"><i class="fa fa-edit"></i> edit</button>
+                    <button class="deletebookmark" data-id="{{_id}}"><i class="fa fa-trash"></i> delete</button><br><br>
+                    <iframe src="https://www.facebook.com/plugins/share_button.php?href={{link}}&layout=button&size=small&width=59&height=20&appId" width="59" height="20" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true" allow="encrypted-media"></iframe>
+                
+                </div>
+                
+                {{/each}}
+            </div>
+        
+        
+    </body>
+</html>

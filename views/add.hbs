@@ -1,0 +1,90 @@
+<html>
+    <head>
+        <style>
+        body{
+            margin:0;
+            color:black;
+            font-family: 'Poppins', sans-serif;
+            background:#333;
+        }
+        input[type=text], select {
+            width: 100%;
+            padding: 12px 20px;
+            margin: 8px 0;
+            display: inline-block;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+            }
+        input[type=submit] {
+            width: 100px;
+            background-color: #4CAF50;
+            text-transform: uppercase;
+            color: white;
+            padding: 14px 20px;
+            margin: 8px 0;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        input[type=submit]:hover {
+            background-color: #45a049;
+        }
+
+        textarea{
+            width: 320px;
+            height: 240px;
+            &.fixed_size;
+                max-width: 1500px;
+                max-height: 240px;
+        }
+
+        div {
+            border-radius: 5px;
+            background-color: #f2f2f2;
+            padding: 20px;
+            margin: 50px;
+        }
+        ul {
+          list-style-type: none;
+          margin: 0;
+          padding: 0;
+          overflow: hidden;
+          background-color: black;
+        }
+        
+        li {
+          float: left;
+        }
+        
+        li a {
+          display: block;
+          color: white;
+          text-align: center;
+          padding: 14px 16px;
+          text-decoration: none;
+        }
+        
+        li a:hover:not(.active) {
+          background-color: #111;
+        }
+        
+        .active {
+          background-color: #4CAF50;
+        }   
+    </style>
+    </head>
+    
+    <body>
+        <ul>
+            <li><a class="active" href="#home">Users</a></li>=
+            <li style="float:right"><a href="/public/login.html">Logout</a></li>
+        </ul>
+        <form action="add" method="POST">
+            Username: <input type="text" name="un"><br>
+            Password <input type="password" name="pw"><br>
+            <input type="submit" value="add"><br>
+        </form>
+    </body>
+</html>

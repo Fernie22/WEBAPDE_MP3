@@ -1,0 +1,138 @@
+<html>
+    <head>
+        <script src="jquery.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <style>
+        body{
+            margin:0;
+            color:black;
+            font-family: 'Poppins', sans-serif;
+            background:#333;
+        }
+
+        input[type=text], input[type=url], select {
+            width: 100%;
+            padding: 12px 20px;
+            margin: 8px 0;
+            display: inline-block;
+            border: 1px solid #c    cc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        input[type=submit] {
+            width: 100px;
+            background-color: #4CAF50;
+            text-transform: uppercase;
+            color: white;
+            padding: 14px 20px;
+            margin: 8px 0;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        input[type=submit]:hover {
+            background-color: #45a049;
+        }
+
+        textarea{
+            width: 1560px;
+            height: 240px;
+            &.fixed_size;
+                max-width: 1560px;
+                max-height: 240px;
+        }
+
+        div {
+            border-radius: 5px;
+            background-color: #f2f2f2;
+            padding: 20px;
+            margin: 50px;
+        }
+        ul {
+          list-style-type: none;
+          margin: 0;
+          padding: 0;
+          overflow: hidden;
+          background-color: black;
+        }
+        
+        li {
+          float: left;
+        }
+        
+        li a {
+          display: block;
+          color: white;
+          text-align: center;
+          padding: 14px 16px;
+          text-decoration: none;
+        }
+        
+        li a:hover:not(.active) {
+          background-color: #111;
+        }
+        
+        .active {
+          background-color: #4CAF50;
+        }
+
+        img{
+            max-width:100%;
+        } 
+        button{ 
+            font-family: "Roboto", sans-serif;
+            text-transform: uppercase;
+            background:dodgerblue;
+            border: 0%;
+            padding: 10px;
+            color: black;
+            font-size: 14px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: RoyalBlue;
+        } 
+    </style>
+    </head>
+    
+    <body>
+        <ul>
+            <li><a class="active" href="#home">Dashboard</a></li>
+            <li><a href="home">Profile</a></li>
+            <li style="float:right"><a href="login.html">Logout</a></li>
+        </ul>
+        <br>
+        <a href="dashboard"><button><i class="fa fa-arrow-left"></i> Back</button></a>
+        <div>
+            If you changed the link, click to view the changes!<br><br>    
+            <button><i class="fa fa-eye"></i>View Details</button><br><br>
+            <form action="updatebookmark" method="POST">
+                Link: <input id="link" type="url" size="70" name="link" value="{{bookmark.link}}"><br><br>
+                Title: <input id="title" type="text" size="30" name="title" value="{{bookmark.title}}"><br><br>
+                Image:
+                <input type="text" name="metaimage" id="img" value="{{bookmark.metaimage}}">
+                <img id="display" src="{{bookmark.metaimage}}"><br><br> 
+                Description: <br>
+                <textarea id="comment" rows="4" cols="1200" name="comment" value="{{bookmark.comment}}"></textarea><br>
+                <input type="hidden" name="id" id="editid" value="{{bookmark._id}}">
+                <input type="submit" value="update"><br>
+            </form>
+        </div>
+                        <script>
+                    $('button').click(function() {
+                        $.get('https://cors-anywhere.herokuapp.com/' + $('#link').val(), function(result) {
+                            var image = $(result).filter('meta[property="og:image"]').attr('content');
+                            var title = $(result).filter('meta[property="og:title"]').attr('content');
+                            var description = $(result).filter('meta[name="description"]').attr('content');
+
+                            document.getElementById("display").src = image;
+                            document.getElementById("img").value = image;
+                            document.getElementById("title").value = title;
+                            document.getElementById("comment").value = description;
+                        });
+                        
+                    });
+                </script>
+    </body>
+</html>

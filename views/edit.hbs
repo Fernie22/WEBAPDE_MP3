@@ -1,0 +1,20 @@
+<html>
+    <head>
+        
+    </head>
+    
+    <body>
+        <form action="update" method="POST">
+            un <input type="text" name="un" value="
+                {{user.username}}"><br>
+            
+            pw <input type="password" name="pw" value="
+                {{user.password}}"><br>
+            
+            <input type="hidden" name="id" id="editid"
+            value="{{user._id}}">
+            
+            <input type="submit" value="update"><br>
+        </form>
+    </body>
+</html>
